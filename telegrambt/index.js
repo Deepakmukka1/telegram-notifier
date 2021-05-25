@@ -1,14 +1,22 @@
 const { Telegraf } = require("telegraf");
 const axios = require("axios");
-
+function getCurrentDate() {
+  var separator = "-";
+  let newDate = new Date();
+  let date = newDate.getDate();
+  let month = newDate.getMonth() + 1;
+  let year = newDate.getFullYear();
+  return `${date}${separator}${
+    month < 10 ? `0${month}` : `${month}`
+  }${separator}${year}`;
+}
 const bot = new Telegraf("1687166742:AAH1RPf5__c1BqasAxwOg0gHobe9ZFGqsbY");
 bot.command("start", (ctx) => {
-  // console.log(ctx.from)
   const { first_name } = ctx.update.message.from;
   const { last_name } = ctx.update.message.from;
   ctx.telegram.sendMessage(
     ctx.chat.id,
-    `Hello there ! Welcome ${first_name} ${last_name}`,
+    `👋 Hello there ! Welcome ${first_name} ${last_name || ''} `,
     requestPhoneKeyboard
   );
 });
@@ -18,7 +26,7 @@ const requestPhoneKeyboard = {
     keyboard: [
       [
         {
-          text: "Check slots",
+          text: "Check slots 💉",
           one_time_keyboard: true,
         },
       ],
@@ -26,8 +34,8 @@ const requestPhoneKeyboard = {
   },
 };
 
-bot.hears("Check slots", (ctx) => {
-  ctx.telegram.sendMessage(ctx.message.chat.id, `Enter your pincode`);
+bot.hears("Check slots 💉", (ctx) => {
+  ctx.telegram.sendMessage(ctx.message.chat.id, ` 📍 Enter your pincode `);
 });
 bot.on("text", (ctx) => {
   const pinCode = ctx.update.message.text;
@@ -40,13 +48,13 @@ bot.on("text", (ctx) => {
 
   axios
     .get(
-      `https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByPin?pincode=${pinCode}&date=24-05-2021`,
+      `https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByPin?pincode=${pinCode}&date=${getCurrentDate()}`,
       configs
     )
     .then(function (response) {
-      // handle success
+
       const { sessions } = response.data;
-      if (sessions.length == 0) ctx.reply("No sessions today");
+      if (sessions.length == 0) ctx.reply(" ❌ No vaccine sessions today");
       else {
         let finalData="";
         sessions.map((data) => {
@@ -72,7 +80,7 @@ bot.on("text", (ctx) => {
             to || "No data"
           }\nFee type : ${fee_type || "No data"}\nAge limit : ${
             min_age_limit || "No data"
-          }\nCaccine type :${
+          }\nVaccine type :${
             vaccine || "No data"
           }\nAvailable amount of Dose 1 : ${
             available_capacity_dose1 || "No data"
