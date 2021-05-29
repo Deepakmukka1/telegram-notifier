@@ -1,4 +1,5 @@
 const { Telegraf } = require("telegraf");
+const TELEGRAMAPIKEY=require("./config/key")
 const axios = require("axios");
 function getCurrentDate() {
   var separator = "-";
@@ -10,7 +11,8 @@ function getCurrentDate() {
     month < 10 ? `0${month}` : `${month}`
   }${separator}${year}`;
 }
-const bot = new Telegraf("1687166742:AAH1RPf5__c1BqasAxwOg0gHobe9ZFGqsbY");
+
+const bot = new Telegraf(TELEGRAMAPIKEY);
 bot.command("start", (ctx) => {
   const { first_name } = ctx.update.message.from;
   const { last_name } = ctx.update.message.from;
