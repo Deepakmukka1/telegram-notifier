@@ -1,5 +1,5 @@
 # Telegram-notifier 💉
-This bot shows the avilability of vaccine in your locality in one command
+This bot shows the availability of vaccine and slots in your locality in one command
 
 
 ### https://t.me/Notifyvaccinebot
