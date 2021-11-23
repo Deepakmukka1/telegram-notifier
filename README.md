@@ -1,6 +1,7 @@
 # Telegram-notifier 💉
 This bot shows the availability of vaccine and slots in your locality in one command .
 
+( Currently working on a update, it might not work for some users, Apologies )
 
 ### https://t.me/Notifyvaccinebot
 
